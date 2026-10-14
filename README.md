@@ -1,71 +1,73 @@
 # Gridpen
 
-**Tabloların ve çalışma düzenin bir arada.**
+**English** · [Türkçe](README.tr.md)
 
-Gridpen; tabloları, hesaplamaları, grafik ve notları sonsuz bir tuvalde birleştirir.
-Sayfalar, çizimler ve veri birbirine bağlanabilir; bir tablo değişince ona bağlı
-grafik de aynı çalışma alanında güncellenir.
+**Think, calculate and visualize in one workspace.**
 
-| Bağlantı | Kullanım |
+Gridpen combines tables, formulas, charts and notes on an infinite canvas.
+Pages, diagrams and data can connect; editing a table updates its linked chart
+in the same workspace.
+
+| Link | Access |
 | --- | --- |
-| [Canlı uygulama](https://gridpen.mehmetfatihdogan.com.tr/app) | Hesapla çalışma alanına erişim |
-| [Etkileşimli demo](https://gridpen.mehmetfatihdogan.com.tr/demo?node=finance) | Örnek finans panosunu tarayıcıda deneme |
-| [Tanıtım sitesi](https://gridpen.mehmetfatihdogan.com.tr/) | Özellikler ve ürün anlatımı |
+| [Live app](https://gridpen.mehmetfatihdogan.com.tr/app) | Account-based workspace access |
+| [Interactive demo](https://gridpen.mehmetfatihdogan.com.tr/demo?node=finance) | Explore a sample finance board in your browser |
+| [Product website](https://gridpen.mehmetfatihdogan.com.tr/) | Features and product overview |
 
-![Gridpen: tablolar, hesap kartları, bağlı grafikler ve akış diyagramı](assets/finans.png)
+![Gridpen: tables, calculation cards, linked charts and a flow diagram](assets/finans.png)
 
-## Özellikler
+## Features
 
-- **Sonsuz tuval:** şekiller, kalem, bağlantılar, notlar, çerçeveler ve hizalama araçları.
-- **Tablolar ve hesaplama:** hücre düzenleme, formüller, sıralama/filtreleme ve veri içe/dışa aktarma.
-- **Veriye bağlı grafikler:** tabloları grafiklerle aynı panoda yorumlama.
-- **Zengin metin sayfaları:** görev listeleri, kod blokları, matematik ve dosyalar.
-- **Belge araçları:** PDF görüntüleme ve pano/sayfa dışa aktarımları.
-- **Çalışma alanları:** pano ve sayfa düzeni, arama, çöp kutusu ve yedekleme.
-- **Çevrimdışı çalışma ve eşitleme:** cihazda kayıt, isteğe bağlı bulut eşitlemesi; Türkçe/İngilizce ve açık/koyu tema.
-- **Agent API:** kapsamlandırılmış erişimle çalışma alanı, belge ve tablo işlemleri.
+- **Infinite canvas:** shapes, drawing, connectors, notes, frames and alignment tools.
+- **Tables and formulas:** cell editing, calculations, sorting/filtering and data import/export.
+- **Linked charts:** visualize table data on the same board.
+- **Rich-text pages:** task lists, code blocks, math and files.
+- **Document tools:** PDF viewing and board/page exports.
+- **Workspaces:** organize boards and pages, search, trash and backups.
+- **Offline work and sync:** local persistence, optional cloud sync, Turkish/English and light/dark themes.
+- **Agent API:** scoped access to workspace, document and table operations.
 
 <details>
-<summary>Mobil görünüm</summary>
+<summary>Mobile view</summary>
 
-<img src="assets/mobil.png" alt="Gridpen mobil çalışma alanı" width="360">
+<img src="assets/mobil.png" alt="Gridpen mobile workspace" width="360">
 
 </details>
 
-## Teknoloji
+## Technology
 
-| Katman | Teknoloji ve görevi |
+| Layer | Technology and purpose |
 | --- | --- |
-| Arayüz | React, TypeScript, Vite; tuval ve düzenleme araçları |
-| Belge modeli | Yjs; CRDT tabanlı belge durumu |
-| Yerel kayıt | IndexedDB, y-indexeddb; cihazda kalıcı belge kayıtları |
-| Hesap ve API | Node.js, Hono, SQLite; oturum, erişim ve eşitleme |
-| Hesaplama ve görselleştirme | Kendi Excel sözdizimli formül motoru, Formula.js, ECharts |
-| Metin / kod / PDF | Tiptap, CodeMirror, PDF.js, KaTeX |
-| Kontroller | Vitest, Playwright ve TypeScript |
+| Interface | React, TypeScript, Vite; canvas and editing tools |
+| Document model | Yjs; CRDT-based document state |
+| Local persistence | IndexedDB, y-indexeddb; on-device document storage |
+| Accounts and API | Node.js, Hono, SQLite; sessions, access and synchronization |
+| Calculation and visualization | Custom Excel-syntax formula engine, Formula.js, ECharts |
+| Text / code / PDF | Tiptap, CodeMirror, PDF.js, KaTeX |
+| Checks | Vitest, Playwright and TypeScript |
 
-## Mimari
+## Architecture
 
 ```mermaid
 flowchart LR
-    UI[React - tuval, tablo ve sayfalar] --> Doc[Yjs belge modeli]
+    UI[React - canvas, tables and pages] --> Doc[Yjs document model]
     Doc <--> Local[(IndexedDB)]
-    Doc <-->|İsteğe bağlı eşitleme| API[Hono API]
-    API --> DB[(SQLite - hesap ve belge kayıtları)]
-    API --> Assets[Dosya / varlık deposu]
-    Agent[Yetkilendirilmiş agent] --> API
+    Doc <-->|Optional sync| API[Node.js / Hono API]
+    API --> DB[(SQLite - accounts and documents)]
+    API --> Assets[File / asset storage]
+    Agent[Authorized agent] --> API
 ```
 
-Yjs belge modeli yerel çalışma ile sunucu eşitlemesi arasında ortak veri biçimidir.
-Tablo hesaplama, grafik ve metin düzenleme katmanları bu model üzerinde çalışır.
-Agent erişimi, hesap oturumundan ayrı ve yetki kapsamıyla sınırlandırılır.
+The Yjs document model provides a shared data format for local editing and server
+sync. Calculation, visualization and text editing operate on that model.
+Agent access uses separate credentials and permission scopes from account sessions.
 
-## Geliştirici
+## Developer
 
-**Mehmet Fatih Doğan** — ürün tasarımı, tuval ve belge modeli, hesaplama/grafik
-entegrasyonları, API, veri eşitleme, testler ve dağıtım.
+**Mehmet Fatih Doğan** — product design, canvas and document model,
+calculation/chart integrations, API, synchronization, tests and deployment.
 
-[Portfolyo ve iletişim](https://mehmetfatihdogan.com.tr/) · [GitHub](https://github.com/fatihdogann)
+[Portfolio & contact](https://mehmetfatihdogan.com.tr/en/) · [GitHub](https://github.com/fatihdogann)
 
-Bu depo ürün tanıtımı ve mimari özetini içerir. Görseller örnek pano verileridir;
-gizlilik ve kullanım koşulları canlı sitededir.
+This repository contains the product showcase and architecture overview.
+Screenshots show sample boards; privacy policies and terms are available on the live site.
